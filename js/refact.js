@@ -42,7 +42,7 @@ switch (difficoltà) {
     // test
     case 9:
         nMax = 10;
-        nBomb = 2;
+        nBomb = 6;
         break;
 
     default:
@@ -53,7 +53,7 @@ switch (difficoltà) {
 
 /* --------------------------------------------------- */
 
-// funzione per mischiare random un array
+// funzione per mischiare in moodo random un array
 function shuffleArray(array) {
     let curId = array.length;
     // There remain elements to shuffle
@@ -79,7 +79,7 @@ function genNumberArray(number) {
     return randomNumberDB;
 }
 
-// bombDB sarà un array di "nMax" numer random di "nBomb" elementi
+// bombDB sarà un array di "nMax" numeri random di soli "nBomb" elementi
 const bombDB = shuffleArray(genNumberArray(nMax)).slice(0, nBomb);
 console.log(bombDB.sort((a, b) => a - b));
 
@@ -104,17 +104,28 @@ let counter = 0;
 let i = 0;
 while (i < maxLoop) {
 
+    let valid = true;
     const userNumber = parseInt(prompt(`Inserisci un numero tra 1 e ${nMax}`), 10);
 
+    // se l'untete inserisce qualcosaa che non sia un numero il gioco finisce
     if (isNaN(userNumber)) {
         i = maxLoop;
+        alert("Sei uscito dal gioco");
+        valid = false;
+    }
+
+    if (userNumber > nMax || userNumber <= 0) {
+        alert("Inserisci il numero nel range indicato");
+        valid = false;
     }
 
     if (bombDB.includes(userNumber)) {
         i = maxLoop;
-        alert(`Hai perso. Il tuo punteggio è ${counter}`)
-    } else {
+        alert(`Hai perso. Il tuo punteggio è ${counter}`);
+        valid = false;
+    }
 
+    if (valid) {
         if (pushToArray(userNumberDB, userNumber)) {
             i++;
             counter++;
@@ -123,8 +134,11 @@ while (i < maxLoop) {
         }
     }
 
+
     if (counter === maxLoop) {
         alert(`Hai VINTO! Il tuo punteggio è ${counter}`)
     }
+
+    console.log(userNumberDB)
 }
 
