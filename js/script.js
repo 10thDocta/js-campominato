@@ -58,7 +58,7 @@ switch (difficoltà) {
 // nMin e nMax = per impostare il range dei numeri entro i quali il gioco è valido
 // arrRandom = ho impostato un valore di default [] e serve per comparare se il numero inserito dall'utente è presente nel randomNumberDB, nel caso per far terminare il gioco 
 function theGame(number, boolean, nMin, nMax, arrRandom = []) {
-    console.log(number);
+
     // questo sarà il nostro array
     const numberDB = [];
     //contatore per il punteggio e decretare se l'utente ha vinto
