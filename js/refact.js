@@ -83,12 +83,13 @@ function genNumberArray(number) {
 const bombDB = shuffleArray(genNumberArray(nMax)).slice(0, nBomb);
 console.log(bombDB.sort((a, b) => a - b));
 
-
+// funzione che verifica inserisce un numero nell'array solo questo numero non è presente nel suddetto array
 const pushToArray = (arr, numb) => {
+
     // findIndex ritorna -1 se l'elemento non è presente nell'array
     const index = arr.findIndex((e) => e === numb);
 
-    // se findIndex ritorna -1, il numero non è presente nell'array e lo aggiungo, ritornando false, così da concludere il ciclo do while
+    // se findIndex ritorna -1, il numero non è presente nell'array e lo aggiungo, ritornando false
     if (index === -1) {
         arr.push(numb);
         return true;
@@ -99,7 +100,7 @@ const pushToArray = (arr, numb) => {
 
 const userNumberDB = [];
 const maxLoop = nMax - nBomb;
-let counter = 0;
+let score = 0;
 
 let i = 0;
 while (i < maxLoop) {
@@ -107,38 +108,41 @@ while (i < maxLoop) {
     let valid = true;
     const userNumber = parseInt(prompt(`Inserisci un numero tra 1 e ${nMax}`), 10);
 
-    // se l'untete inserisce qualcosaa che non sia un numero il gioco finisce
+    // se l'untete inserisce un valore che non sia un numero il gioco finisce
     if (isNaN(userNumber)) {
         i = maxLoop;
         alert("Sei uscito dal gioco");
         valid = false;
     }
 
+    // se il numero immesso è fuori dal range >> allert
     if (userNumber > nMax || userNumber <= 0) {
         alert("Inserisci il numero nel range indicato");
         valid = false;
     }
 
+    // se il numero immesso è presente nel bombDB, il gioco termina e l'utente perde
     if (bombDB.includes(userNumber)) {
         i = maxLoop;
-        alert(`Hai perso. Il tuo punteggio è ${counter}`);
+        alert(`Hai perso. Il tuo punteggio è ${score}`);
         valid = false;
     }
 
+    // se nessuna delle condizioni precedenti ha impostato "valid = false"
     if (valid) {
+        // controllo che il numero inserito dall'utente non sia già stato inserito in precedenza e aumento di 1 le variabili
         if (pushToArray(userNumberDB, userNumber)) {
             i++;
-            counter++;
+            score++;
         } else {
             alert('inserisci un numero che non hai già usato');
         }
     }
 
-
-    if (counter === maxLoop) {
-        alert(`Hai VINTO! Il tuo punteggio è ${counter}`)
+    // se il punteggio è uguale al massimo numero dei cicli (maxLoop), l'utente ha indovinato tutti i numeri validi e ha vinto la partita 
+    if (score === maxLoop) {
+        alert(`Hai VINTO! Il tuo punteggio è ${score}`)
     }
 
-    console.log(userNumberDB)
 }
 
